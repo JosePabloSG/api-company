@@ -7,6 +7,9 @@ import { EventsModule } from './events/events.module';
 import { GalleriesModule } from './galleries/galleries.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Company } from './companies/entities/company.entity';
+import { Gallery } from './galleries/entities/gallery.entity'; 
+import { Event } from './events/entities/event.entity';
+import { Service } from './services/entities/service.entity';
 
 @Module({
   imports: [CompaniesModule, ServicesModule, EventsModule, GalleriesModule,
@@ -15,9 +18,9 @@ import { Company } from './companies/entities/company.entity';
         host: 'localhost',
         port: 3306,
         username: 'root',
-        password: '2710',
+        password: 'Obando19',
         database: 'company',
-        entities: [Company],
+        entities: [Company,Gallery,Event,Service],
         autoLoadEntities: true,
         synchronize: true,
       })
