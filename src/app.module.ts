@@ -20,7 +20,7 @@ import { Service } from './services/entities/service.entity';
         username: 'root',
         password: 'Obando19',
         database: 'company',
-        entities: [Company,Service],
+        entities: [Company,Gallery,Event,Service],
         autoLoadEntities: true,
         synchronize: true,
       })
