@@ -66,6 +66,6 @@ export class Company {
   paragraphHomeProducts: string;
 
   @Column()
-  paragraphHomeAboutUs: string;
+  paragraphHomeAboutUs: string;
 }
 
