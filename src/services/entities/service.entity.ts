@@ -1,4 +1,16 @@
-import { Entity } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('services')
-export class Service {}
+export class Service {
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column()
+    title: string;
+
+    @Column()
+    paragraph: string;
+
+    @Column()
+    url: string;
+}
