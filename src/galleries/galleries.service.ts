@@ -1,26 +1,41 @@
+
 import { Injectable } from '@nestjs/common';
-import { CreateGalleryDto } from './dto/create-gallery.dto';
-import { UpdateGalleryDto } from './dto/update-gallery.dto';
+import { CreateGalleriesDto } from './dto/create-gallery.dto';
+import { UpdateGalleriesDto } from './dto/update-gallery.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Galleries } from './entities/gallery.entity';
 
 @Injectable()
 export class GalleriesService {
-  create(createGalleryDto: CreateGalleryDto) {
-    return 'This action adds a new gallery';
+
+  constructor(
+    @InjectRepository(Galleries)
+    private GalleriesRepository: Repository<Galleries>
+  ){}
+  
+  create(createGalleryDto: CreateGalleriesDto) {
+    const addedGalleries = this.GalleriesRepository.create(createGalleryDto);
+    this.GalleriesRepository.save(addedGalleries);
+    return addedGalleries;
   }
 
   findAll() {
-    return `This action returns all galleries`;
+    return this.GalleriesRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} gallery`;
+    return this.GalleriesRepository.findOneBy({id})
   }
 
-  update(id: number, updateGalleryDto: UpdateGalleryDto) {
-    return `This action updates a #${id} gallery`;
+  async update(id: number, updateGalleriesDto: UpdateGalleriesDto) {
+    const updatedGallery = await this.GalleriesRepository.update({id},updateGalleriesDto);
+    return updatedGallery;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} gallery`;
+    return this.GalleriesRepository.delete(id);
   }
 }
+
+
