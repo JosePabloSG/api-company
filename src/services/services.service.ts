@@ -19,9 +19,10 @@ export class ServicesService {
     return this.serviceRepository.findOneBy({id});
   }
 
-  update(id: number, updateServiceDto: UpdateServiceDto) {
-    var updatedServiceDto = await this.serviceRepository.update({id},updateServiceDto);
-    return updateServiceDto;
+  async update(id: number, updateServiceDto: UpdateServiceDto) {
+    
+    const updatedServiceDto = await this.serviceRepository.update({id},updateServiceDto);
+    return updatedServiceDto;
   }
   
 
