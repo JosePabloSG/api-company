@@ -2,6 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('companies')
 export class Company {
+
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -24,19 +25,25 @@ export class Company {
   imageHero: string;
 
   @Column()
-  titleServices: string;
+  subtitleServices: string;
 
   @Column()
-  subtitleServices: string;
+  titleServices: string;
 
   @Column()
   paragraphServices: string;
 
   @Column()
+  galleryTitle: string;
+  
+  @Column()
+  subtitleEvents: string;
+
+  @Column()
   titleEvents: string;
 
   @Column()
-  subtitleEvents: string;
+  paragraphEvents: string;
 
   @Column()
   imageFooter: string;
@@ -48,7 +55,13 @@ export class Company {
   paragraphFooter: string;
 
   @Column()
-  titleGallery: string;
+  titleHome: string;
+
+  @Column()
+  paragraphHomeProducts: string;
+
+  @Column()
+  paragraphHomeAboutUs: string;
 
   @Column()
   titleContact: string;
@@ -59,13 +72,5 @@ export class Company {
   @Column()
   paragraphContactSuarez: string;
 
-  @Column()
-  titleHome: string;
-
-  @Column()
-  paragraphHomeProducts: string;
-
-  @Column()
-  paragraphHomeAboutUs: string;
 }
 

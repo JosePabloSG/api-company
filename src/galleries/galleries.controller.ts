@@ -1,6 +1,6 @@
 import { Controller, Get,Put, Body, Param, Delete } from '@nestjs/common';
 import { GalleriesService } from './galleries.service';
-import { UpdateGalleryDto } from './dto/update-gallery.dto';
+import { UpdateGalleriesDto } from './dto/update-gallery.dto';
 
 @Controller('galleries')
 export class GalleriesController {
@@ -17,8 +17,8 @@ export class GalleriesController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateGalleryDto: UpdateGalleryDto) {
-    return this.galleriesService.update(+id, updateGalleryDto);
+  update(@Param('id') id: string, @Body() updateGalleriesDto: UpdateGalleriesDto) {
+    return this.galleriesService.update(+id, updateGalleriesDto);
   }
 
   @Delete(':id')
