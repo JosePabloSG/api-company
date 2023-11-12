@@ -2,6 +2,7 @@ import { Controller, Get,Put, Body, Param, Delete } from '@nestjs/common';
 import { GalleriesService } from './galleries.service';
 import { UpdateGalleriesDto } from './dto/update-gallery.dto';
 
+
 @Controller('galleries')
 export class GalleriesController {
   constructor(private readonly galleriesService: GalleriesService) {}
@@ -17,7 +18,7 @@ export class GalleriesController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateGalleriesDto: UpdateGalleriesDto) {
+  update(@Param('id') id: string, @Body() updateGalleriesDto: UpdateGalleriesDto)  {
     return this.galleriesService.update(+id, updateGalleriesDto);
   }
 

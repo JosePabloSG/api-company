@@ -18,7 +18,7 @@ export class CompaniesService {
   }
 
   findAll() {
-    return this.companyRepository.find();
+    return this.companyRepository.find({relations:['galleries', 'service', 'event']});
   }
 
   findOne(id: number) {
