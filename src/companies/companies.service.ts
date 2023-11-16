@@ -21,15 +21,42 @@ export class CompaniesService {
     return this.companyRepository.find({relations:['galleries', 'service', 'event']});
   }
 
-  findOne(id: number) {
-    this.companyRepository.findOneBy({id});
+async findOne(id: number) {
+  const company = await this.companyRepository
+    .createQueryBuilder('company')
+    .leftJoinAndSelect('company.galleries', 'galleries')
+    .leftJoinAndSelect('company.service', 'service')
+    .leftJoinAndSelect('company.event', 'event')
+    .where('company.id = :id', { id })
+    .getOne();
+
+  if (!company) {
+    throw new Error(`Company with id ${id} not found`);
   }
 
-  async update(id: number, updateCompanyDto: UpdateCompanyDto) {
-    const updatedCompany = await this.companyRepository.update({ id }, updateCompanyDto);
-    return updatedCompany;
+  return company;
+}
+  
+  
+async update(id: number, updateCompanyDto: UpdateCompanyDto) {
+  const existingCompany = await this.companyRepository.findOneBy({id});
+
+  if (!existingCompany) {
+    throw new Error(`Company with id ${id} not found`);
   }
 
+  // Aplica solo los cambios que se proporcionan en el DTO de actualización
+  if (updateCompanyDto.paragraphHero) {
+    existingCompany.paragraphHero = updateCompanyDto.paragraphHero;
+  }
+
+  // ... aplica cambios para otros campos si es necesario
+
+  const updatedCompany = await this.companyRepository.save(existingCompany);
+  return updatedCompany;
+}
+
+  
   remove(id: number) {
     return this.companyRepository.delete(id);
   }
