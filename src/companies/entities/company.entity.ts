@@ -1,4 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Galleries} from "src/galleries/entities/gallery.entity";
+import { Event } from 'src/events/entities/event.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Service } from "src/services/entities/service.entity";
 
 @Entity('companies')
 export class Company {
@@ -72,5 +75,13 @@ export class Company {
   @Column()
   paragraphContactSuarez: string;
 
+  @OneToMany(() => Galleries, galleries =>  galleries.company)
+  galleries: Galleries[];
+
+  @OneToMany(() => Event, event => event.company)
+  event: Event[];
+
+  @OneToMany(() => Service, service => service.company)
+  service: Service[];
 }
 

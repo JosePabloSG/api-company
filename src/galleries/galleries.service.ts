@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Galleries } from './entities/gallery.entity';
 
+
 @Injectable()
 export class GalleriesService {
 
@@ -28,7 +29,7 @@ export class GalleriesService {
     return this.GalleriesRepository.findOneBy({id})
   }
 
-  async update(id: number, updateGalleriesDto: UpdateGalleriesDto) {
+  async update(id: number, updateGalleriesDto: UpdateGalleriesDto)  {
     const updatedGallery = await this.GalleriesRepository.update({id},updateGalleriesDto);
     return updatedGallery;
   }
