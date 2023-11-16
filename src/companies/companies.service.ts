@@ -10,53 +10,46 @@ export class CompaniesService {
   constructor(
     @InjectRepository(Company)
     private companyRepository: Repository<Company>
-  ){}
+  ) { }
   create(createCompanyDto: CreateCompanyDto) {
     const addedCompany = this.companyRepository.create(createCompanyDto);
-     this.companyRepository.save(addedCompany);
-     return addedCompany;
+    this.companyRepository.save(addedCompany);
+    return addedCompany;
   }
 
   findAll() {
-    return this.companyRepository.find({relations:['galleries', 'service', 'event']});
+    return this.companyRepository.find({ relations: ['galleries', 'service', 'event'] });
   }
 
-async findOne(id: number) {
-  const company = await this.companyRepository
-    .createQueryBuilder('company')
-    .leftJoinAndSelect('company.galleries', 'galleries')
-    .leftJoinAndSelect('company.service', 'service')
-    .leftJoinAndSelect('company.event', 'event')
-    .where('company.id = :id', { id })
-    .getOne();
+  async findOne(id: number) {
+    const company = await this.companyRepository
+      .createQueryBuilder('company')
+      .leftJoinAndSelect('company.galleries', 'galleries')
+      .leftJoinAndSelect('company.service', 'service')
+      .leftJoinAndSelect('company.event', 'event')
+      .where('company.id = :id', { id })
+      .getOne();
 
-  if (!company) {
-    throw new Error(`Company with id ${id} not found`);
+    if (!company) {
+      throw new Error(`Company with id ${id} not found`);
+    }
+
+    return company;
   }
 
-  return company;
-}
-  
-  
-async update(id: number, updateCompanyDto: UpdateCompanyDto) {
-  const existingCompany = await this.companyRepository.findOneBy({id});
+  async update(id: number, updateCompanyDto: UpdateCompanyDto) {
+    const existingCompany = await this.companyRepository.findOneBy({ id });
 
-  if (!existingCompany) {
-    throw new Error(`Company with id ${id} not found`);
+    if (!existingCompany) {
+      throw new Error(`Company with id ${id} not found`);
+    }
+    if (updateCompanyDto.paragraphHero) {
+      existingCompany.paragraphHero = updateCompanyDto.paragraphHero;
+    }
+    const updatedCompany = await this.companyRepository.save(existingCompany);
+    return updatedCompany;
   }
 
-  // Aplica solo los cambios que se proporcionan en el DTO de actualización
-  if (updateCompanyDto.paragraphHero) {
-    existingCompany.paragraphHero = updateCompanyDto.paragraphHero;
-  }
-
-  // ... aplica cambios para otros campos si es necesario
-
-  const updatedCompany = await this.companyRepository.save(existingCompany);
-  return updatedCompany;
-}
-
-  
   remove(id: number) {
     return this.companyRepository.delete(id);
   }
