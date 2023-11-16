@@ -1,5 +1,6 @@
-import { Controller, Delete, Get,Param, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get,Param, Put } from '@nestjs/common';
 import { ServicesService } from './services.service';
+import { UpdateServiceDto } from './dto/update-service.dto';
 
 @Controller('services')
 export class ServicesController {
@@ -16,8 +17,8 @@ export class ServicesController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Param() body) {
-    return this.servicesService.update(+id, body);
+  update(@Param('id') id: string, @Body() updateServiceDto: UpdateServiceDto)  {
+    return this.servicesService.update(+id, updateServiceDto);
   }
 
   @Delete(':id')
